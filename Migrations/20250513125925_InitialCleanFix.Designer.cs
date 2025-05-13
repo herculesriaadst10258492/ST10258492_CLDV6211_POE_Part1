@@ -5,22 +5,22 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Riaad_EventEase.Models;
+using Riaad_EventEase.Data;
 
 #nullable disable
 
 namespace Riaad_EventEase.Migrations
 {
-    [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250401124858_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20250513125925_InitialCleanFix")]
+    partial class InitialCleanFix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -32,6 +32,10 @@ namespace Riaad_EventEase.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingID"));
+
+                    b.Property<string>("BookerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
@@ -51,7 +55,7 @@ namespace Riaad_EventEase.Migrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("Riaad_EventEase.Models.Event", b =>
+            modelBuilder.Entity("Riaad_EventEase.Models.AppEvent", b =>
                 {
                     b.Property<int>("EventID")
                         .ValueGeneratedOnAdd()
@@ -59,13 +63,13 @@ namespace Riaad_EventEase.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventID"));
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("EventDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
+                    b.Property<string>("EventDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("EventName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -97,7 +101,7 @@ namespace Riaad_EventEase.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("VenueName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -108,32 +112,44 @@ namespace Riaad_EventEase.Migrations
 
             modelBuilder.Entity("Riaad_EventEase.Models.Booking", b =>
                 {
-                    b.HasOne("Riaad_EventEase.Models.Event", "Event")
-                        .WithMany()
+                    b.HasOne("Riaad_EventEase.Models.AppEvent", "AppEvent")
+                        .WithMany("Bookings")
                         .HasForeignKey("EventID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Riaad_EventEase.Models.Venue", "Venue")
-                        .WithMany()
+                        .WithMany("Bookings")
                         .HasForeignKey("VenueID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Event");
+                    b.Navigation("AppEvent");
 
                     b.Navigation("Venue");
                 });
 
-            modelBuilder.Entity("Riaad_EventEase.Models.Event", b =>
+            modelBuilder.Entity("Riaad_EventEase.Models.AppEvent", b =>
                 {
                     b.HasOne("Riaad_EventEase.Models.Venue", "Venue")
-                        .WithMany()
+                        .WithMany("Events")
                         .HasForeignKey("VenueID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Venue");
+                });
+
+            modelBuilder.Entity("Riaad_EventEase.Models.AppEvent", b =>
+                {
+                    b.Navigation("Bookings");
+                });
+
+            modelBuilder.Entity("Riaad_EventEase.Models.Venue", b =>
+                {
+                    b.Navigation("Bookings");
+
+                    b.Navigation("Events");
                 });
 #pragma warning restore 612, 618
         }

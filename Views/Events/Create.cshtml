@@ -1,12 +1,12 @@
-﻿@model Riaad_EventEase.Models.Event
+﻿@model Riaad_EventEase.Models.AppEvent
 
 @{
-    ViewData["Title"] = "Create Event";
+    ViewData["Title"] = "Create AppEvent";
 }
 
-<h1>Create Event</h1>
+<h1>Create AppEvent</h1>
 
-<h4>Event</h4>
+<h4>AppEvent</h4>
 <hr />
 <div class="row">
     <div class="col-md-6">
@@ -14,9 +14,15 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="EventName" class="control-label"></label>
+                <input asp-for="EventName" class="form-control" />
+                <span asp-validation-for="EventName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EventDescription" class="control-label"></label>
+                <input asp-for="EventDescription" class="form-control" />
+                <span asp-validation-for="EventDescription" class="text-danger"></span>
             </div>
 
             <div class="form-group">
@@ -26,19 +32,14 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
                 <label asp-for="VenueID" class="control-label"></label>
                 <select asp-for="VenueID" class="form-control" asp-items="ViewBag.VenueID"></select>
                 <span asp-validation-for="VenueID" class="text-danger"></span>
             </div>
 
-            <div class="form-group mt-2">
+            <div class="form-group mt-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
             </div>
         </form>
     </div>

@@ -1,16 +1,16 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using Riaad_EventEase.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Riaad_EventEase.Data;
 
 namespace Riaad_EventEase.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -18,15 +18,48 @@ namespace Riaad_EventEase.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult BookingsForEvent()
         {
-            return View();
+            var bookings = _context.Bookings.Include(b => b.AppEvent).ToList();
+            return View(bookings);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult BookingCounts()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var counts = _context.Bookings
+                .GroupBy(b => b.EventID)
+                .Select(g => new
+                {
+                    EventID = g.Key,
+                    Count = g.Count()
+                }).ToList();
+            return View(counts);
+        }
+
+        public IActionResult EventsWithoutBookings()
+        {
+            var events = _context.Events
+                .Where(e => !_context.Bookings.Any(b => b.EventID == e.EventID))
+                .ToList();
+            return View(events);
+        }
+
+        public IActionResult LargeVenues()
+        {
+            var venues = _context.Venues
+                .Where(v => v.Capacity > 400)
+                .ToList();
+            return View(venues);
+        }
+
+
+
+        public IActionResult UpcomingEvents()
+        {
+            var events = _context.Events
+                .Where(e => e.EventDate > DateTime.Now)
+                .ToList();
+            return View(events);
         }
     }
 }

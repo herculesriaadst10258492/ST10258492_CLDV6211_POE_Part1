@@ -1,22 +1,20 @@
-﻿@model IEnumerable<Riaad_EventEase.Models.Event>
-
+﻿@model IEnumerable<Riaad_EventEase.Models.AppEvent>
 @{
     ViewData["Title"] = "Events";
 }
-
 <h1>Events</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New AppEvent</a>
 </p>
 
 <table class="table">
     <thead>
         <tr>
             <th>Name</th>
-            <th>Event Date</th>
             <th>Description</th>
-            <th>Venue</th>
+            <th>Date</th>
+            <th>VenueID</th>
             <th></th>
         </tr>
     </thead>
@@ -24,10 +22,10 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Name</td>
-                <td>@item.EventDate.ToString("yyyy-MM-dd")</td>
-                <td>@item.Description</td>
-                <td>@item.Venue?.Name</td>
+                <td>@item.EventName</td>
+                <td>@item.EventDescription</td>
+                <td>@item.EventDate.ToShortDateString()</td>
+                <td>@item.VenueID</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.EventID">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.EventID">Details</a> |

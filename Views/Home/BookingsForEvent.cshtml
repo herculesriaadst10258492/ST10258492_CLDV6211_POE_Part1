@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Riaad_EventEase.Models.Booking>
+
+@{
+    ViewData["Title"] = "Bookings for AppEvent";
+}
+
+<h2>Bookings for AppEvent</h2>
+
+<table class="table">
+    <tr>
+        <th>Booker</th>
+        <th>AppEvent</th>
+        <th>Venue</th>
+        <th>Date</th>
+    </tr>
+    @foreach (var booking in Model)
+    {
+        <tr>
+            <td>@booking.BookerName</td>
+            <td>@booking.AppEvent?.EventName</td>
+            <td>@booking.Venue?.VenueName</td>
+            <td>@booking.BookingDate.ToShortDateString()</td>
+        </tr>
+    }
+</table>

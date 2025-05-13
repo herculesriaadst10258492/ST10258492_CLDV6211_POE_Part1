@@ -5,7 +5,7 @@ namespace Riaad_EventEase.Models
 {
     public class AppEvent
     {
-        public int EventID { get; set; }
+        public int AppEventID { get; set; }
 
         [Required]
         public string EventName { get; set; } = string.Empty;
@@ -13,17 +13,14 @@ namespace Riaad_EventEase.Models
         [Required]
         public DateTime EventDate { get; set; }
 
-        [Required]
         public string EventDescription { get; set; } = string.Empty;
 
-        public string? ImageURL { get; set; }
+        public string ImageURL { get; set; } = string.Empty;
 
-        [ForeignKey("Venue")]
+        // Foreign Key
         public int VenueID { get; set; }
 
-        public Venue? Venue { get; set; }
-
-        public ICollection<Booking>
-    ? Bookings { get; set; }
+        // Navigation Property
+        public Venue Venue { get; set; } = null!;
     }
-    }
+}

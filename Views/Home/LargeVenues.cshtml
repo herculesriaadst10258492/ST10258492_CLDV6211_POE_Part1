@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Riaad_EventEase.Models.Venue>
+
+@{
+    ViewData["Title"] = "Large Venues";
+}
+
+<h2>Venues with Capacity > 400</h2>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Capacity</th>
+    </tr>
+    @foreach (var venue in Model)
+    {
+        <tr>
+            <td>@venue.VenueName</td>
+            <td>@venue.Location</td>
+            <td>@venue.Capacity</td>
+        </tr>
+    }
+</table>

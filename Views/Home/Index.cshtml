@@ -1,22 +1,18 @@
 ﻿@{
-    ViewData["Title"] = "Welcome";
+    ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to Riaad EventEase</h1>
+    <h1 class="display-4">Welcome to Riaad_EventEase</h1>
     <p class="lead">Your one-stop solution to manage Venues, Events, and Bookings with ease.</p>
 
     <hr />
-
-    <div class="row justify-content-center">
-        <div class="col-md-3">
-            <a class="btn btn-primary btn-lg w-100" asp-controller="Venues" asp-action="Index">Manage Venues</a>
-        </div>
-        <div class="col-md-3">
-            <a class="btn btn-success btn-lg w-100" asp-controller="Events" asp-action="Index">Manage Events</a>
-        </div>
-        <div class="col-md-3">
-            <a class="btn btn-info btn-lg w-100" asp-controller="Bookings" asp-action="Index">Manage Bookings</a>
-        </div>
+    <h2 class="text-center">Quick Queries</h2>
+    <div class="text-center mb-5">
+        <a class="btn btn-dark m-1" asp-action="BookingsForEvent">Bookings for AppEvent</a>
+        <a class="btn btn-success m-1" asp-action="BookingCounts">Booking Counts per AppEvent</a>
+        <a class="btn btn-warning m-1" asp-action="EventsWithoutBookings">Events Without Bookings</a>
+        <a class="btn btn-info m-1" asp-action="LargeVenues">Venues with Capacity > 400</a>
+        <a class="btn btn-primary m-1" asp-action="UpcomingEvents">Upcoming Events</a>
     </div>
 </div>

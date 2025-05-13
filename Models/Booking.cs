@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Riaad_EventEase.Models
 {
@@ -7,16 +6,15 @@ namespace Riaad_EventEase.Models
     {
         public int BookingID { get; set; }
 
-        [Required]
-        [DataType(DataType.Date)]
-        public DateTime BookingDate { get; set; }
+        public int AppEventID { get; set; }
 
-        [Required]
-        public int EventID { get; set; }
-        public Event? Event { get; set; }
+        public AppEvent AppEvent { get; set; } = null!;
 
-        [Required]
         public int VenueID { get; set; }
-        public Venue? Venue { get; set; }
+
+        public Venue Venue { get; set; } = null!;
+
+        [Required]
+        public DateTime BookingDate { get; set; }
     }
 }

@@ -1,98 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Riaad_EventEase.Data;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Riaad_EventEase.Models;
 
-namespace Riaad_EventEase.Controllers
+namespace Riaad_EventEase.Models
 {
-    public class VenuesController : Controller
+    public class AppEvent
     {
-        private readonly ApplicationDbContext _context;
+        public int EventID { get; set; }
 
-        public VenuesController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        [Required]
+        public string EventName { get; set; } = string.Empty;
 
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Venues.ToListAsync());
-        }
+        [Required]
+        public DateTime EventDate { get; set; }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+        [Required]
+        public string EventDescription { get; set; } = string.Empty;
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Venue venue)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(venue);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(venue);
-        }
+        public string? ImageURL { get; set; }
 
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null) return NotFound();
+        [ForeignKey("Venue")]
+        public int VenueID { get; set; }
 
-            var venue = await _context.Venues.FindAsync(id);
-            if (venue == null) return NotFound();
+        public Venue? Venue { get; set; }
 
-            return View(venue);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Venue venue)
-        {
-            if (id != venue.VenueID) return NotFound();
-
-            if (ModelState.IsValid)
-            {
-                _context.Update(venue);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(venue);
-        }
-
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var venue = await _context.Venues.FindAsync(id);
-            if (venue == null) return NotFound();
-
-            return View(venue);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var venue = await _context.Venues.FindAsync(id);
-            if (venue != null)
-            {
-                _context.Venues.Remove(venue);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
-        }
-
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var venue = await _context.Venues.FirstOrDefaultAsync(v => v.VenueID == id);
-            if (venue == null) return NotFound();
-
-            return View(venue);
-        }
+        public ICollection<Booking>? Bookings { get; set; }
     }
 }

@@ -5,13 +5,10 @@ namespace Riaad_EventEase.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Event> Events { get; set; }
         public DbSet<Venue> Venues { get; set; }
+        public DbSet<AppEvent> AppEvents { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
     }
 }

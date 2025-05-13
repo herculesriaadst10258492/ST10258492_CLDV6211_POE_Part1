@@ -5923,7 +5923,7 @@ textarea.form-control-lg {
   position: relative;
 }
 
-.carousel.pointer-event {
+.carousel.pointer-AppEvent {
   touch-action: pan-y;
 }
 

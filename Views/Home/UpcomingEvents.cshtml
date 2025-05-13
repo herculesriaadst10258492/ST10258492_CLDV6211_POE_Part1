@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Riaad_EventEase.Models.AppEvent>
+
+@{
+    ViewData["Title"] = "Upcoming Events";
+}
+
+<h2>Upcoming Events</h2>
+
+<table class="table">
+    <tr>
+        <th>AppEvent</th>
+        <th>Date</th>
+        <th>Description</th>
+    </tr>
+    @foreach (var evt in Model)
+    {
+        <tr>
+            <td>@evt.EventName</td>
+            <td>@evt.EventDate.ToShortDateString()</td>
+            <td>@evt.EventDescription</td>
+        </tr>
+    }
+</table>

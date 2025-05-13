@@ -1,0 +1,21 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Booking Counts per AppEvent";
+}
+
+<h2>Booking Counts</h2>
+
+<table class="table">
+    <tr>
+        <th>AppEvent</th>
+        <th>Bookings</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.EventName</td>
+            <td>@item.Count</td>
+        </tr>
+    }
+</table>

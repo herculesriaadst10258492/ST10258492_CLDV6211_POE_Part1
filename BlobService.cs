@@ -8,7 +8,9 @@ namespace Riaad_EventEase.Services
 {
     public class BlobService
     {
-        private readonly string _connectionString = "DefaultEndpointsProtocol=https;AccountName=riaadblobstorage;AccountKey=wGDBscV/pVzmsXsJSpq/aKfbi7gq7idOk6RNOAZbBPaRptrh7SwQMzuaK6Qvkc3ne02unJlN9W2c+AStVCstpw==;EndpointSuffix=core.windows.net";
+        private readonly string _connectionString = "<REDACTED_CONNECTION_STRING>";
+
+
         private readonly string _containerName = "venueimages";
 
         public async Task<string> UploadFileAsync(IFormFile file)
